@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="shortcut icon" href="imagens/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="css/style.css">
+    <script type="module" src="script/script.js"></script>
+    <title>Me Acha!</title>
+</head>
+<!-- <script>
+    window.onload = function() {
+
+
+        const formulario = document.querySelector('#form-endedeco');
+        formulario.addEventListener('submit', function(e) {
+            e.preventDefault();
+        });
+
+        let dadosCep = async function(cep) {
+            document.querySelector('#loading').style.display = 'flex';
+
+            let url = `https://viacep.com.br/ws/${cep}/json/`;
+
+            try {
+                let dadosFetch = await fetch(url); // response
+
+                let dadosJson = await dadosFetch.json(); // json do dadosFetch
+
+                console.log('dadosJson', dadosJson);
+                console.log('dadosFetch', dadosFetch);
+
+                if (dadosJson.erro) {
+                    formulario.reset();
+                    formulario.cep.focus();
+                    throw new Error("CEP não localizado! Tente novamente");
+
+                }
+                if (dadosJson) {
+                    setTimeout(function() {
+                        document.querySelector('#loading').style.display = 'none';
+                        resultadoCep(dadosJson); // envia o json para outra função
+
+                    }, 300);
+                }
+            } catch (error) { // se der erro:
+                setTimeout(function() {
+                    document.querySelector('#loading').style.display = 'none';
+
+                }, 300);
+                alert(error);
+            }
+
+
+        }
+
+        function resultadoCep(dadosCep) {
+
+            for (let campo in dadosCep) {
+                // campo = logradouro, rua, bairro, etc....
+                if (document.querySelector(`#${campo}`)) {
+                    document.querySelector(`#${campo}`).value = dadosCep[campo];
+                }
+
+            }
+
+
+        }
+
+
+        const btnBuscar = document.querySelector("#buscarCep");
+        const CEP_ = document.querySelector("#cep");
+        CEP_.addEventListener('keyup', function() {
+            // CEP_.value = CEP_.value.replace(/^(\d{2})(\d{5})(\d{4}).*/, "($1) $2-$3");
+
+            CEP_.value = CEP_.value.replace(/\D+/g, '');
+            CEP_.value = CEP_.value.replace(/^(\d{5})(\d{3}).*/, "$1-$2");
+            CEP_.style.border = "2px solid black";
+        });
+
+        btnBuscar.addEventListener('click', function() {
+
+            if (CEP_.value.length !== 9) {
+                CEP_.style.border = "2px solid red";
+                return
+            }
+            dadosCep(CEP_.value);
+
+        });
+
+
+    }
+</script> -->
+
+<body>
+
+    <header id="header-top">
+        <h1>ME ACHA!</h1>
+        <h2>ENCONTRE UM ENDEREÇO PELO NÚMERO DE CEP</h2>
+        <div id="icone"><span class="material-icons">
+        travel_explore
+        </span></div>
+    </header>
+
+    <main>
+        <section id="box">
+            <form id="form-endedeco">
+                <div id="loading">
+                    <div class="spinner"></div>
+                </div>
+                <label for="cep" class="flex">CEP</label>
+                <input type="text" name="cep" id="cep" autocomplete="nope" maxlength="9">
+
+                <label for="rua" class="flex">Rua</label>
+                <input type="text" name="rua" id="logradouro" disabled>
+
+                <label for="bairro" class="flex">Bairro</label>
+                <input type="text" name="bairro" id="bairro" disabled>
+
+                <label for="cidade" class="flex">Cidade</label>
+                <input type="text" name="cidade" id="localidade" disabled>
+
+                <label for="estado" class="flex">Estado</label>
+                <input type="text" name="estado" id="uf" disabled>
+
+                <input type="submit" value="BUSCAR" id="buscarCep">
+            </form>
+
+        </section>
+    </main>
+</body>
+
+</html>
